@@ -6,10 +6,10 @@ board = [
 
 
 def draw_board(board)
-  p ["_","0","1","2"]
+  p spacer = ["_","0","1","2"]
   i = 0
   board.each do |b|
-    p b.shift((i.to_s))
+    p b.unshift(i.to_s)
     i += 1
   end
 end
