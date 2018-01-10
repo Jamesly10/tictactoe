@@ -2,7 +2,6 @@
 
 #to-do - prevent illegal moves
 # =>     sanitaize data inputs
-# => win condition needs to work for both players
 
 def new_board
   #makes a new board
@@ -24,7 +23,7 @@ def draw_board(board)
     p b.unshift(i.to_s)
     i += 1
   end
-
+#
   #takes the guide away before we return the state of the board
   board.each do |b|
     b.shift()
@@ -36,9 +35,8 @@ end
 
 def make_move(board,move,player)
   #takes a board and the move in a two element array, puts the move on the board
-  move_x=move[0]
-  move_y=move[1]
-  player == 1 ? board[move_x][move_y] = "X" : board[move_x][move_y] = "O"
+  player == 1 ? marker = "X" : marker = "O"
+  board[move[0]][move[1]] = marker
   draw_board(board)
 end
 
@@ -49,7 +47,7 @@ def get_move
   move = move.map {|e| e.to_i}
 end
 
-def check_win(board,player)
+def check_win?(board,player)
   player == 1 ? marker = "X" : marker = "O"
   #checks to see if anyone has won the game
   win = false
@@ -86,7 +84,7 @@ while continue.downcase == 'y' do
 
   move = get_move
   make_move(board,move,player)
-  if check_win(board,player)
+  if check_win?(board,player)
     puts "You won the game!"
     puts "Play again? (y/n)"
     continue = gets.chomp.downcase
