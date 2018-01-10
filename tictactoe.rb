@@ -14,9 +14,9 @@ def draw_board(board)
   end
 end
 
-# puts "What is your move?"
-# move = gets.chomp.split(",")
-# move = move.map {|e| e.to_i}
-#
-# p move
+puts "What is your move?"
+move = gets.chomp.split(",")
+move = move.map {|e| e.to_i}
+
+p move
 draw_board(board)
