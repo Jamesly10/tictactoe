@@ -30,11 +30,11 @@ def draw_board(board)
   board
 end
 
-def make_move(board,move)
+def make_move(board,move,player)
   #takes a board and the move in a two element array, puts the move on the board
   move_x=move[0]
   move_y=move[1]
-  board[move_x][move_y] = "X"
+  if player == 1 ? board[move_x][move_y] = "X" : board[move_x][move_y] = "O"
   draw_board(board)
 end
 
@@ -67,12 +67,20 @@ end
 #initialize our variables
 continue = 'Y'
 board = new_board
+player = 2
 
 
 while continue.downcase == 'y' do
   draw_board(board)
+
+  if player == 2
+    p player = 1
+  elsif player == 1
+    p player = 2
+  end
+
   move = get_move
-  make_move(board,move)
+  make_move(board,move,player)
   if check_win(board)
     puts "You won the game!"
     puts "Play again? (y/n)"
