@@ -34,7 +34,7 @@ def make_move(board,move,player)
   #takes a board and the move in a two element array, puts the move on the board
   move_x=move[0]
   move_y=move[1]
-  if player == 1 ? board[move_x][move_y] = "X" : board[move_x][move_y] = "O"
+  player == 1 ? board[move_x][move_y] = "X" : board[move_x][move_y] = "O"
   draw_board(board)
 end
 
