@@ -12,11 +12,29 @@ def draw_board(board)
     p b.unshift(i.to_s)
     i += 1
   end
+  board.each do |b|
+    b.shift()
+    i += 1
+  end
+  board
 end
 
-puts "What is your move?"
-move = gets.chomp.split(",")
-move = move.map {|e| e.to_i}
+def make_move(board,move)
+  move_x=move[0]
+  move_y=move[1]
+  board[move_x][move_y] = "X"
+  board.each do |b|
+    p b
+  end
+end
 
-p move
+def get_move
+  puts "What is your move?"
+  move = gets.chomp.split(",")
+  move = move.map {|e| e.to_i}
+end
+
+
 draw_board(board)
+move = get_move
+make_move(board,move)
