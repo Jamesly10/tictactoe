@@ -33,7 +33,7 @@ def get_move
   move = gets.chomp.split(",")
   move = move.map {|e| e.to_i}
 end
-
+#
 
 draw_board(board)
 move = get_move
