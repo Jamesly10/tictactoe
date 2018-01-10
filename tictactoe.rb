@@ -1,10 +1,4 @@
 #we're going to make checkers!
-board = [
-  ["_","_","_"],
-  ["_","_","_"],
-  ["_","_","_"]]
-
-
 def draw_board(board)
   p spacer = ["_","0","1","2"]
   i = 0
@@ -23,9 +17,7 @@ def make_move(board,move)
   move_x=move[0]
   move_y=move[1]
   board[move_x][move_y] = "X"
-  board.each do |b|
-    p b
-  end
+  draw_board(board)
 end
 
 def get_move
@@ -33,8 +25,23 @@ def get_move
   move = gets.chomp.split(",")
   move = move.map {|e| e.to_i}
 end
-#
 
-draw_board(board)
-move = get_move
-make_move(board,move)
+def check_win(board)
+
+end
+
+
+continue = 'Y'
+board = [
+  ["_","_","_"],
+  ["_","_","_"],
+  ["_","_","_"]]
+
+while continue.downcase == 'y' do
+  puts "\e[H\e[2J"
+  draw_board(board)
+  move = get_move
+  make_move(board,move)
+  puts "Continue? (y/n)"
+  continue = gets.chomp.downcase
+end
