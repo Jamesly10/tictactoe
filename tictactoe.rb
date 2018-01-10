@@ -1,7 +1,7 @@
 #we're going to make tictactoe!
 
 #to-do - prevent illegal moves
-# =>     sanitaize data inputs
+# =>     sanitaize data inputs, use <=> to check?
 
 def new_board
   #makes a new board
@@ -23,7 +23,7 @@ def draw_board(board)
     p b.unshift(i.to_s)
     i += 1
   end
-#
+
   #takes the guide away before we return the state of the board
   board.each do |b|
     b.shift()
@@ -35,8 +35,13 @@ end
 
 def make_move(board,move,player)
   #takes a board and the move in a two element array, puts the move on the board
-  player == 1 ? marker = "X" : marker = "O"
-  board[move[0]][move[1]] = marker
+  #returns a board or NIL if the move is invalid
+   player == 1 ? marker = "X" : marker = "O"
+  if board[move[0]][move[1]] == "_"
+    board[move[0]][move[1]] = marker
+  else
+    return nil
+  end
   draw_board(board)
 end
 
@@ -83,7 +88,11 @@ while continue.downcase == 'y' do
   end
 
   move = get_move
-  make_move(board,move,player)
+
+  #ok so I need to loop while the move is invalid
+  make_move(board,move,player) 
+
+
   if check_win?(board,player)
     puts "You won the game!"
     puts "Play again? (y/n)"
