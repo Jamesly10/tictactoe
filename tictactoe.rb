@@ -1,5 +1,9 @@
 #we're going to make tictactoe!
 
+#to-do - prevent illegal moves
+# =>     sanitaize data inputs
+# => win condition needs to work for both players
+
 def new_board
   #makes a new board
    [["_","_","_"],
@@ -45,20 +49,21 @@ def get_move
   move = move.map {|e| e.to_i}
 end
 
-def check_win(board)
+def check_win(board,player)
+  player == 1 ? marker = "X" : marker = "O"
   #checks to see if anyone has won the game
   win = false
   #check the rows
   board.each do |a|
-    win = true if a[0] == 'X' && a[1] == 'X' && a[2] =='X'
+    win = true if a[0] == marker && a[1] == marker && a[2] ==marker
   end
   #check the columns, there has to be a better way to do this.
-  win = true if board[0][0] == 'X' && board[1][0] == 'X' && board[2][0] == 'X'
-  win = true if board[0][1] == 'X' && board[1][1] == 'X' && board[2][1] == 'X'
-  win = true if board[0][2] == 'X' && board[1][2] == 'X' && board[2][2] == 'X'
+  win = true if board[0][0] == marker && board[1][0] == marker && board[2][0] == marker
+  win = true if board[0][1] == marker && board[1][1] == marker && board[2][1] == marker
+  win = true if board[0][2] == marker && board[1][2] == marker && board[2][2] == marker
   #check the two diag directions
-  win = true if board[0][0] == 'X' && board[1][1] == 'X' && board[2][2] == 'X'
-  win = true if board[0][2] == 'X' && board[1][1] == 'X' && board[2][0] == 'X'
+  win = true if board[0][0] == marker && board[1][1] == marker && board[2][2] == marker
+  win = true if board[0][2] == marker && board[1][1] == marker && board[2][0] == marker
 
   #return win
   win
@@ -81,7 +86,7 @@ while continue.downcase == 'y' do
 
   move = get_move
   make_move(board,move,player)
-  if check_win(board)
+  if check_win(board,player)
     puts "You won the game!"
     puts "Play again? (y/n)"
     continue = gets.chomp.downcase
