@@ -2,9 +2,11 @@
 
 #to-do - prevent illegal moves
 # =>     sanitaize data inputs, use <=> to check?
+# => make the board prettier using a heredoc
 
 def new_board
   #makes a new board
+  #maybe use a heredoc to draw the baord?
    [["_","_","_"],
     ["_","_","_"],
     ["_","_","_"]]
@@ -24,46 +26,65 @@ def draw_board(board)
     i += 1
   end
 
-  #takes the guide away before we return the state of the board
+  #takes the guide away before we return the board
   board.each do |b|
     b.shift()
     i += 1
   end
 
+  #return the board
   board
 end
 
 def make_move(board,move,player)
   #takes a board and the move in a two element array, puts the move on the board
-  #returns a board or NIL if the move is invalid
-   player == 1 ? marker = "X" : marker = "O"
-  if board[move[0]][move[1]] == "_"
-    board[move[0]][move[1]] = marker
-  else
-    return nil
-  end
+  #returns a board
+
+  #check to see which player and set the marker
+  player == 1 ? marker = "X" : marker = "O"
+
+  #this is out because I want to check the move when I get it from the users
+  # if board[move[0]][move[1]] == "_"
+  #   board[move[0]][move[1]] = marker
+  # else
+  #   return nil
+  # end
+
+  #place the marker on the board
+  board[move[0]][move[1]] = marker
+
+  #draw the board to the screen
   draw_board(board)
 end
 
 def get_move
   #right now we expect the move to be two nums comma separated, needs work
+
+  #prompt the user and get the move
   puts "What is your move?"
   move = gets.chomp.split(",")
+
+  #turn the move into an array for later, return it
   move = move.map {|e| e.to_i}
 end
 
 def check_win?(board,player)
+  #check the player and set the marker for comparisons
   player == 1 ? marker = "X" : marker = "O"
-  #checks to see if anyone has won the game
+
+  #set wins to false
   win = false
+
   #check the rows
   board.each do |a|
     win = true if a[0] == marker && a[1] == marker && a[2] ==marker
   end
+
   #check the columns, there has to be a better way to do this.
   win = true if board[0][0] == marker && board[1][0] == marker && board[2][0] == marker
   win = true if board[0][1] == marker && board[1][1] == marker && board[2][1] == marker
   win = true if board[0][2] == marker && board[1][2] == marker && board[2][2] == marker
+
   #check the two diag directions
   win = true if board[0][0] == marker && board[1][1] == marker && board[2][2] == marker
   win = true if board[0][2] == marker && board[1][1] == marker && board[2][0] == marker
@@ -87,10 +108,11 @@ while continue.downcase == 'y' do
     p player = 2
   end
 
+  #i think this is where I actually want to check for valid moves
   move = get_move
 
   #ok so I need to loop while the move is invalid
-  make_move(board,move,player) 
+  make_move(board,move,player)
 
 
   if check_win?(board,player)
