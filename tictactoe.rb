@@ -1,9 +1,3 @@
-#we're going to make tictactoe!
-
-#to-do - prevent illegal moves
-# =>     sanitaize data inputs, use <=> to check?
-# => make the board prettier using a heredoc
-
 def new_board
   #makes a new board
   [["_","_","_"],
@@ -16,7 +10,7 @@ def draw_board(board)
   #maybe use a heredoc to draw the baord?
 
   #clears screen. I have no idea what this is doing. Need to look up.
-  puts "\e[H\e[2J"
+  #puts "\e[H\e[2J"
 
   #creates the number guides so people know how to play
   p spacer = ["_","0","1","2"]
@@ -65,7 +59,11 @@ end
 
 def check_move?(board,move)
   #checks to see if the move is valid or not
-  board[move[0]][move[1]] == "_" ? true : false
+  if board[move[0]][move[1]] == "_"
+    return true
+  else
+    return false
+  end
 end
 
 def check_win?(board,player)
@@ -98,6 +96,7 @@ end
 continue = 'Y'
 board = new_board
 player = 2
+move_good = false
 
 #loop to run the game
 while continue.downcase == 'y' do
@@ -109,12 +108,15 @@ while continue.downcase == 'y' do
     puts "Player one, X, go!"
   elsif player == 1
     player = 2
-    puts "Player one, X, go!"
+    puts "Player two, O, go!"
   end
 
   #i think this is where I actually want to check for valid moves
-  move = get_move
-  check_move?(board,move) #need to do something with this...
+
+  #while move_good  == false do
+    move = get_move
+    p move_good = check_move?(board,move) #need to do something with this...
+  #end
 
   #ok so I need to loop while the move is invalid
   make_move(board,move,player)
