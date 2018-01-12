@@ -10,7 +10,7 @@ def draw_board(board)
   #maybe use a heredoc to draw the baord?
 
   #clears screen. I have no idea what this is doing. Need to look up.
-  #puts "\e[H\e[2J"
+  puts "\e[H\e[2J"
 
   #creates the number guides so people know how to play
   p spacer = ["_","0","1","2"]
@@ -96,10 +96,10 @@ end
 continue = 'Y'
 board = new_board
 player = 2
-move_good = false
 
 #loop to run the game
 while continue.downcase == 'y' do
+  move_good = false
   draw_board(board)
 
   #swaps players and prompts them to play
@@ -113,10 +113,13 @@ while continue.downcase == 'y' do
 
   #i think this is where I actually want to check for valid moves
 
-  #while move_good  == false do
+  while move_good  == false do
+    #p move_good
     move = get_move
-    p move_good = check_move?(board,move) #need to do something with this...
-  #end
+    move_good = check_move?(board,move) #need to do something with this...
+    puts "Invalid move, please try again!" if !move_good
+    #pause = gets
+  end
 
   #ok so I need to loop while the move is invalid
   make_move(board,move,player)
