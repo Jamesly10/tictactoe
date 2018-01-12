@@ -1,8 +1,8 @@
 def new_board
   #makes a new board
-  [["_","_","_"],
-  ["_","_","_"],
-  ["_","_","_"]]
+  [["X","X","X"],
+  ["X","_","X"],
+  ["X","X","X"]]
 end
 
 def draw_board(board)
@@ -67,12 +67,26 @@ def check_move?(board,move)
 end
 
 def check_win?(board,player)
+  stalemate = false
   #check the player and set the marker for comparisons
   player == 1 ? marker = "X" : marker = "O"
 
   #set wins to false
   win = false
 
+  #check for stalemate
+  #loop through whole board to see if we have any _ left
+  # puts "I'm before the stalemate check"
+  # pause = gets
+  board.each do |a|
+    pause = gets
+    puts "im in the stalemate check"
+    if a[0] == "_" or a[1] == "_" or a[2] == "_"
+      break
+    end
+    return puts "Stalemate!"
+  end
+do
   #check the rows
   board.each do |a|
     win = true if a[0] == marker && a[1] == marker && a[2] ==marker
@@ -86,7 +100,7 @@ def check_win?(board,player)
   #check the two diag directions
   win = true if board[0][0] == marker && board[1][1] == marker && board[2][2] == marker
   win = true if board[0][2] == marker && board[1][1] == marker && board[2][0] == marker
-
+end
   #return win
   win
 end
