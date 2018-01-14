@@ -1,3 +1,9 @@
+#fix play again
+
+#store moves you've already done, and then have the computer do a move that is valid
+
+
+
 def new_board
   #makes a new board
   [[" "," "," "],
@@ -60,8 +66,18 @@ def make_move(board,move,player)
   draw_board(board)
 end
 
+def ai_move(board)
+  ai_move = [Random.rand(3),Random.rand(3)]
+  until check_move?(board, ai_move)
+    ai_move = [Random.rand(3),Random.rand(3)]
+  end
+  ai_move
+end
+
 def get_move
   #right now we expect the move to be two nums comma separated, needs work
+  # strings break this, need to put in a loop that only quits when we get a
+  # two element array
 
   #prompt the user and get the move
   puts "What is your move?"
@@ -72,7 +88,7 @@ def get_move
 end
 
 def check_move?(board,move)
-  #checks to see if the move is valid or not
+  #checks to see if the move is valid or not, takes a board (3x3 array) and a two element array
   if board[move[0]][move[1]] == " "
     return true
   else
@@ -120,6 +136,7 @@ end
 continue = 'Y'
 board = new_board
 player = 2
+
 
 #loop to run the game
 while continue.downcase == 'y' do
