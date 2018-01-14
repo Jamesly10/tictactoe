@@ -137,8 +137,12 @@ continue = 'Y'
 board = new_board
 player = 2
 
-
+#how do I implement the AI in the game? I need to ask the player if they want to do one player or two player
 #loop to run the game
+
+puts "1 player or 2 player?"
+ai_player = gets.chomp.to_i
+
 while continue.downcase == 'y' do
   move_good = false
   puts  draw_board(board)
@@ -149,14 +153,22 @@ while continue.downcase == 'y' do
     puts "Player one, X, go!"
   elsif player == 1
     player = 2
-    puts "Player two, O, go!"
+    if ai_player == 2
+      puts "Player two, O, go!"
+    end
   end
 
   #i think this is where I actually want to check for valid moves
 
   while move_good  == false do
     #p move_good
-    move = get_move
+    p "in move_good"
+    move = if player == 1 || (player == 2 && ai_player == 2)
+      get_move
+    elsif (player == 2 && ai_player == 1)
+      "one player"
+      ai_move(board)
+    end
     move_good = check_move?(board,move) #need to do something with this...
     puts "Invalid move, please try again!" if !move_good
     #pause = gets
