@@ -141,7 +141,7 @@ player = 2
 #loop to run the game
 
 puts "1 player or 2 player?"
-ai_player = gets.chomp.to_i
+num_players = gets.chomp.to_i
 
 while continue.downcase == 'y' do
   move_good = false
@@ -153,19 +153,17 @@ while continue.downcase == 'y' do
     puts "Player one, X, go!"
   elsif player == 1
     player = 2
-    if ai_player == 2
+    if num_players == 2
       puts "Player two, O, go!"
     end
   end
 
-  #i think this is where I actually want to check for valid moves
-
   while move_good  == false do
     #p move_good
     p "in move_good"
-    move = if player == 1 || (player == 2 && ai_player == 2)
+    move = if player == 1 || (player == 2 && num_players == 2)
       get_move
-    elsif (player == 2 && ai_player == 1)
+    elsif (player == 2 && num_players == 1)
       "one player"
       ai_move(board)
     end
