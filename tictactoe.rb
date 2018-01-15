@@ -1,6 +1,3 @@
-#fix play again
-
-
 def new_board
   #makes a new board
   [[" "," "," "],
@@ -29,6 +26,20 @@ def draw_board(board_state)
 
   EOB
 
+end
+
+def swap_player(player,num_players)
+  #swaps players and prompts them to play. Only asks player 2 if they are in the game
+  if player == 2
+    player = 1
+    puts "Player one, X, go!"
+  elsif player == 1
+    player = 2
+    if num_players == 2
+      puts "Player two, O, go!"
+    end
+  end
+  player
 end
 
 def make_move(board,move,player)
@@ -118,11 +129,14 @@ end
 continue = 'Y'
 board = new_board
 player = 2
+num_players = 0
 
 
 #ask if we are playing a 1 player game or a 2 player game
-puts "1 player or 2 player?"
-num_players = gets.chomp.to_i
+until num_players == 1 || num_players == 2 do
+  puts "1 player or 2 player?"
+  num_players = gets.chomp.to_i
+end
 
 #loop to run the game
 while continue.downcase == 'y' do
@@ -130,17 +144,8 @@ while continue.downcase == 'y' do
 
   draw_board(board)
 
-  #swaps players and prompts them to play. Only asks player 2 if they are in the game
-  #right now this causes a bug where player 2 always goes first after the first game
-  if player == 2
-    player = 1
-    puts "Player one, X, go!"
-  elsif player == 1
-    player = 2
-    if num_players == 2
-      puts "Player two, O, go!"
-    end
-  end
+
+  player = swap_player(player,num_players)
 
   #I set move good to false at the start of the turn so the loop works
   move_good = false
@@ -170,9 +175,11 @@ while continue.downcase == 'y' do
     #draw out the board, its nice to see your victory
     draw_board(board)
 
-    #setup a new board and change us to player 2 so we can start clean JUST IN CASE
+    #reinitilize our variables for the next game
     board = new_board
     player = 2
+    continue = ""
+    num_players = 0
 
     #ask the player if they want to play again and grab the answer
     until continue == "y" || continue == "n" do
@@ -184,17 +191,33 @@ while continue.downcase == 'y' do
     if continue == 'n'
       break
     end
+
+    #ask if we are playing a 1 player game or a 2 player game
+    until num_players == 1 || num_players == 2 do
+      puts "1 player or 2 player?"
+      num_players = gets.chomp.to_i
+    end
   end
   if check_stalemate?(board,player)
     draw_board(board)
+
+    #reinitilize our variables for the next game
     board = new_board
     player = 2
+    continue = ""
+    num_players = 0
     until continue == "y" || continue == "n" do
       puts "You played to a stalemate!\nPlay again? (y/n)"
       continue = gets.chomp.downcase
     end
     if continue != 'y'
       break
+    end
+
+    #ask if we are playing a 1 player game or a 2 player game
+    until num_players == 1 || num_players == 2 do
+      puts "1 player or 2 player?"
+      num_players = gets.chomp.to_i
     end
   end
 end
