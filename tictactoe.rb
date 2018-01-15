@@ -40,9 +40,6 @@ def make_move(board,move,player)
 
   #place the marker on the board
   board[move[0]][move[1]] = marker
-
-  #draw the board to the screen
-  #draw_board(board)
 end
 
 def ai_move(board)
@@ -177,8 +174,9 @@ while continue.downcase == 'y' do
     puts "You won the game!\nPlay again? (y/n)"
     continue = gets.chomp.downcase
 
-    #setup a new board JUST IN CASE
+    #setup a new board and change us to player 2 so we can start clean JUST IN CASE
     board = new_board
+    player = 2
 
     if continue != 'y'
       break
@@ -189,6 +187,7 @@ while continue.downcase == 'y' do
     puts "You played to a stalemate!\nPlay again? (y/n)"
     continue = gets.chomp.downcase
     board = new_board
+    player = 2
     if continue != 'y'
       break
     end

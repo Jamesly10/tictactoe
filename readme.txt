@@ -5,9 +5,10 @@ To done ->
 Lets you replay
 doesn't let you make illegal moves (in the right move format)
 detects win/stalemates
+Fix the player 2 goes first after the first game bug
 
 To do ->
 Make the AI a little smarter
   -make sure it checks to see if there is a winning move and actually takes it
   -prevent users from enter gibberish as moves
-Fix the player 2 goes first after the first game bug
+Fix the play again question so that it doesn't barf with bad input
