@@ -86,19 +86,25 @@ class TicTacToe
       ####
       # I think I need to loop here until I get a move that is good. Maybe call check move here?
       ####
-      move = nil
-      until move do
-        puts "What is your move?"
+      move = []
+
+      until check_move?(move) do
+
+        puts "What is your move? (Row,column)"
         move = gets.chomp.split(",")
 
-        #turn the move into an array for later, return it
+        #turn the move into an array so we can check to see if it is good
         move = move.map {|e| e.to_i}
+        puts "Invalid move, please try again." unless check_move?(move)
       end
+      move
     end
 
     def check_move?(move)
       #checks to see if the move is valid or not, takes a board (3x3 array) and a two element array
       #this gets called by ai_move so don't change this!
+      return false unless (move.is_a?(Array) && move.length == 2)
+
       if @board[move[0]][move[1]] == " "
         true
       else
@@ -155,24 +161,16 @@ class TicTacToe
         #swap the players
         swap_player()
 
-        #I set move good to false at the start of the turn so the loop works
-        move_good = false
 
-        #right now I loop here to see if moves are good.
-        until move_good do # maybe move this entire loop to get_move?
+        #if we are player 1 or if we are player 2 in a 2 player game
+        move = if (@player == 1 || (@player == 2 && @num_players == 2))
+          get_move
 
-          #if we are player 1 or if we are player 2 in a 2 player game
-          move = if (@player == 1 || (@player == 2 && @num_players == 2))
-            get_move
-
-            #elsif we are player 2 in a 1 player game, we are the AI
-          elsif (@player == 2 && @num_players == 1)
-            ai_move
-          end
-
-          move_good = check_move?(move)
-          puts "Invalid move, please try again!" unless move_good
+          #elsif we are player 2 in a 1 player game, we are the AI
+        elsif (@player == 2 && @num_players == 1)
+          ai_move
         end
+
 
         #place the move on the board
         make_move(move)
@@ -234,7 +232,7 @@ class TicTacToe
         end
       end
     end
-
 end
 
+#To run the game, create a new TicTacToe instance and call run_game on it.
 TicTacToe.new.run_game
