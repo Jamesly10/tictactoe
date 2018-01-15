@@ -1,24 +1,19 @@
 #fix play again
 
-#store moves you've already done, and then have the computer do a move that is valid
-
-
 
 def new_board
   #makes a new board
   [[" "," "," "],
   [" "," "," "],
   [" "," "," "]]
-
 end
 
 def draw_board(board_state)
   #draws the current board to the screen
-  #maybe use a heredoc to draw the baord?
 
   #clears screen. I have no idea what this is doing. Need to look up.
   puts "\e[H\e[2J"
-  <<~EOB
+  puts <<~EOB
      0   1   2
 
        |   |
@@ -33,23 +28,7 @@ def draw_board(board_state)
 
 
   EOB
-  #creates the number guides so people know how to play
-  # p spacer = ["_","0","1","2"]
-  #
-  # #places a guide on the left hand side
-  # i = 0
-  # board_state.each do |b|
-  #   p b.unshift(i.to_s)
-  #   i += 1
-  # end
-  #
-  # #takes the guide away before we return the board
-  # board_state.each do |b|
-  #   b.shift()
-  #   i += 1
-  # end
 
-  #return the board
 end
 
 def make_move(board,move,player)
@@ -63,10 +42,11 @@ def make_move(board,move,player)
   board[move[0]][move[1]] = marker
 
   #draw the board to the screen
-  draw_board(board)
+  #draw_board(board)
 end
 
 def ai_move(board)
+  #takes a board and makes moves for the AI by picking random moves until one is valid
   ai_move = [Random.rand(3),Random.rand(3)]
   until check_move?(board, ai_move)
     ai_move = [Random.rand(3),Random.rand(3)]
@@ -80,6 +60,9 @@ def get_move
   # two element array
 
   #prompt the user and get the move
+  ####
+  # I think I need to loop here until I get a move that is good. Maybe call check move here?
+  ####
   puts "What is your move?"
   move = gets.chomp.split(",")
 
@@ -145,9 +128,9 @@ num_players = gets.chomp.to_i
 
 while continue.downcase == 'y' do
   move_good = false
-  puts  draw_board(board)
+  draw_board(board)
 
-  #swaps players and prompts them to play
+  #swaps players and prompts them to play. Only asks player 2 if they are in the game
   if player == 2
     player = 1
     puts "Player one, X, go!"
@@ -158,18 +141,15 @@ while continue.downcase == 'y' do
     end
   end
 
-  while move_good  == false do
-    #p move_good
-    p "in move_good"
+  #right now I loop here to see if moves are good.
+  until move_good do
     move = if player == 1 || (player == 2 && num_players == 2)
       get_move
     elsif (player == 2 && num_players == 1)
-      "one player"
       ai_move(board)
     end
     move_good = check_move?(board,move) #need to do something with this...
-    puts "Invalid move, please try again!" if !move_good
-    #pause = gets
+    puts "Invalid move, please try again!" unless move_good
   end
 
   #place the move on the board
