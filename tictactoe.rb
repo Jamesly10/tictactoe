@@ -72,14 +72,16 @@ end
 
 def check_move?(board,move)
   #checks to see if the move is valid or not, takes a board (3x3 array) and a two element array
+  #this gets called by ai_move so don't change this!
   if board[move[0]][move[1]] == " "
-    return true
+    true
   else
-    return false
+    false
   end
 end
 
 def check_stalemate?(board,player)
+  #checks to see if we have played to a stalemate
   stalemate = true
   board.each do |a|
     if a.include?(" ")
@@ -120,17 +122,19 @@ continue = 'Y'
 board = new_board
 player = 2
 
-#how do I implement the AI in the game? I need to ask the player if they want to do one player or two player
-#loop to run the game
 
+#ask if we are playing a 1 player game or a 2 player game
 puts "1 player or 2 player?"
 num_players = gets.chomp.to_i
 
+#loop to run the game
 while continue.downcase == 'y' do
-  move_good = false
+
+
   draw_board(board)
 
   #swaps players and prompts them to play. Only asks player 2 if they are in the game
+  #right now this causes a bug where player 2 always goes first after the first game
   if player == 2
     player = 1
     puts "Player one, X, go!"
@@ -141,26 +145,41 @@ while continue.downcase == 'y' do
     end
   end
 
+  #I set move good to false at the start of the turn so the loop works
+  move_good = false
+
   #right now I loop here to see if moves are good.
   until move_good do
+
+    #if we are player 1 or if we are player 2 in a 2 player game
     move = if player == 1 || (player == 2 && num_players == 2)
       get_move
+
+    #elsif we are player 2 in a 1 player game, we are the AI
     elsif (player == 2 && num_players == 1)
       ai_move(board)
     end
-    move_good = check_move?(board,move) #need to do something with this...
+
+    move_good = check_move?(board,move) # maybe move this entire loop to get_move?
     puts "Invalid move, please try again!" unless move_good
   end
 
   #place the move on the board
   make_move(board,move,player)
 
-  #check to see who has won the game and see if they want to play again
+  #check to see who has won the game and see if they want to play again. loop until they give a decent answer
   if check_win?(board,player)
+
+    #draw out the board, its nice to see your victory
     draw_board(board)
+
+    #ask the player if they want to play again and grab the answer
     puts "You won the game!\nPlay again? (y/n)"
     continue = gets.chomp.downcase
+
+    #setup a new board JUST IN CASE
     board = new_board
+
     if continue != 'y'
       break
     end
