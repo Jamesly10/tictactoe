@@ -5,11 +5,11 @@ class TicTacToe
     num_players = ""
     until num_players == 1 || num_players == 2 do
       puts "Welcome to Tic-Tac-Toe!\n1 player or 2 player?"
-      num_players = gets.chomp.to_i
+      num_players = gets.chomp.to_i # you can't use gets to set instance variables
     end
     @continue = 'Y'
     @board = new_board
-    @player = 2
+    p @player = 2
     @num_players = num_players
   end
 
@@ -43,26 +43,26 @@ class TicTacToe
 
   end
 
-  def swap_player(player)
+  def swap_player()
     #swaps players and prompts them to play. Only asks player 2 if they are in the game
-    if player == 2
-      player = 1
+    if @player == 2
+      @player = 1
       puts "Player one, X, go!"
-    elsif player == 1
-      player = 2
+    elsif @player == 1
+      @player = 2
       if @num_players == 2
         puts "Player two, O, go!"
       end
     end
-    player
+    puts "I'm in swap player and @player is #{@player} "
   end
 
-  def make_move(move,player)
+  def make_move(move)
     #takes a board and the move in a two element array, puts the move on the board
     #returns a board
 
     #check to see which player and set the marker
-    player == 1 ? marker = "X" : marker = "O"
+    @player == 1 ? marker = "X" : marker = "O"
 
     #place the marker on the board
     @board[move[0]][move[1]] = marker
@@ -71,7 +71,7 @@ class TicTacToe
   def ai_move()
     #takes a board and makes moves for the AI by picking random moves until one is valid
     ai_move = [Random.rand(3),Random.rand(3)]
-    until check_move?(@board, ai_move)
+    until check_move?(ai_move)
       ai_move = [Random.rand(3),Random.rand(3)]
     end
     ai_move
@@ -103,7 +103,7 @@ class TicTacToe
     end
   end
 
-  def check_stalemate?(player)
+  def check_stalemate?()
     #checks to see if we have played to a stalemate
     stalemate = true
     @board.each do |a|
@@ -114,9 +114,9 @@ class TicTacToe
     stalemate
   end
 
-  def check_win?(player)
+  def check_win?()
     #check the player and set the marker for comparisons
-    player == 1 ? marker = "X" : marker = "O"
+    @player == 1 ? marker = "X" : marker = "O"
 
     #set wins to false
     win = false
@@ -143,7 +143,7 @@ class TicTacToe
     #initialize our variables
     continue = 'Y'
     #board = new_board
-    player = 2
+    #player = 2
     #num_players = 0
 
 
@@ -160,7 +160,7 @@ class TicTacToe
       draw_board()
 
 
-      player = swap_player(player)
+      swap_player()
 
       #I set move good to false at the start of the turn so the loop works
       move_good = false
@@ -169,11 +169,14 @@ class TicTacToe
       until move_good do
 
         #if we are player 1 or if we are player 2 in a 2 player game
-        move = if player == 1 || (player == 2 && @num_players == 2)
+        #puts "I'm in run game and @player is #{@player} "
+
+        move = if (@player == 1 || (@player == 2 && @num_players == 2))
+          puts "I'm trying to get a move"
           get_move
 
           #elsif we are player 2 in a 1 player game, we are the AI
-        elsif (player == 2 && @num_players == 1)
+        elsif (@player == 2 && @num_players == 1)
           ai_move
         end
 
@@ -182,17 +185,17 @@ class TicTacToe
       end
 
       #place the move on the board
-      make_move(move,player)
+      make_move(move)
 
       #check to see who has won the game and see if they want to play again. loop until they give a decent answer
-      if check_win?(player)
+      if check_win?()
 
         #draw out the board, its nice to see your victory
         draw_board()
 
         #reinitilize our variables for the next game
         @board = new_board
-        player = 2
+        @player = 2
         continue = ""
         @num_players = 0
 
@@ -213,12 +216,12 @@ class TicTacToe
           @num_players = gets.chomp.to_i
         end
       end
-      if check_stalemate?(player)
+      if check_stalemate?()
         draw_board()
 
         #reinitilize our variables for the next game
         @board = new_board
-        player = 2
+        @player = 2
         continue = ""
         @num_players = 0
         until continue == "y" || continue == "n" do
