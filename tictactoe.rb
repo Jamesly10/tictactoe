@@ -86,11 +86,14 @@ class TicTacToe
       ####
       # I think I need to loop here until I get a move that is good. Maybe call check move here?
       ####
-      puts "What is your move?"
-      move = gets.chomp.split(",")
+      move = nil
+      until move do
+        puts "What is your move?"
+        move = gets.chomp.split(",")
 
-      #turn the move into an array for later, return it
-      move = move.map {|e| e.to_i}
+        #turn the move into an array for later, return it
+        move = move.map {|e| e.to_i}
+      end
     end
 
     def check_move?(move)
