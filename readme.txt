@@ -15,3 +15,4 @@ To do ->
 Make the AI a little smarter
   -make sure it checks to see if there is a winning move and actually takes it
   -prevent users from enter gibberish as moves
+String moves break the get_move function, neeeeeeed to figure that out.
