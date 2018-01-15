@@ -5,11 +5,12 @@ class TicTacToe
     num_players = ""
     until num_players == 1 || num_players == 2 do
       puts "Welcome to Tic-Tac-Toe!\n1 player or 2 player?"
-      @num_players = gets.chomp.to_i
+      num_players = gets.chomp.to_i
     end
     @continue = 'Y'
     @board = new_board
     @player = 2
+    @num_players = num_players
   end
 
   def new_board
