@@ -170,24 +170,29 @@ while continue.downcase == 'y' do
     #draw out the board, its nice to see your victory
     draw_board(board)
 
-    #ask the player if they want to play again and grab the answer
-    puts "You won the game!\nPlay again? (y/n)"
-    continue = gets.chomp.downcase
-
     #setup a new board and change us to player 2 so we can start clean JUST IN CASE
     board = new_board
     player = 2
 
-    if continue != 'y'
+    #ask the player if they want to play again and grab the answer
+    until continue == "y" || continue == "n" do
+      puts "You won the game!\nPlay again? (y/n)"
+      continue = gets.chomp.downcase
+    end
+
+    #if we don't want to continue, get out!
+    if continue == 'n'
       break
     end
   end
   if check_stalemate?(board,player)
     draw_board(board)
-    puts "You played to a stalemate!\nPlay again? (y/n)"
-    continue = gets.chomp.downcase
     board = new_board
     player = 2
+    until continue == "y" || continue == "n" do
+      puts "You played to a stalemate!\nPlay again? (y/n)"
+      continue = gets.chomp.downcase
+    end
     if continue != 'y'
       break
     end
