@@ -1,4 +1,4 @@
-#ReadMe File for my Tic-Tac-Toe game.
+#ReadMe(James version) File for my Tic-Tac-Toe game.
 
 To done ->
 1 player or 2 player
@@ -10,7 +10,10 @@ Fix the play again question so that it doesn't barf with bad input
 After finishing a 1 player or 2 player game, let the users choose which to play next
 You don't get congratulated after winning your second game
 String moves break the get_move function, neeeeeeed to figure that out.
+  
 
+
+awesome game!!!
 
 
 To do ->
